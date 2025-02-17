@@ -6,7 +6,7 @@ import 'language_model.dart';
 void main() {
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (_) => MyApp(),
     ),
   );
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: HomePage(),
     );
   }
 }
@@ -36,6 +37,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            DropdownButton<LanguageModel>(
+              value: inputLanguage,
+              onChanged: (value) {
+                if (value == null) return;
+                inputLanguage = value;
+                setState(() {});
+              },
+              items: languages
+                  .map(
+                    (lan) => DropdownMenuItem<LanguageModel>(
+                      value: lan,
+                      child: Text(lan.name),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
